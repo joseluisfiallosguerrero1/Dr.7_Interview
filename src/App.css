@@ -28,6 +28,46 @@
   color: #61dafb;
 }
 
+
+.answer{
+  border: solid 1px #313438;
+  padding: 1.5rem;
+  display: flex;
+  color: white;
+  justify-content: center;
+  align-items: center;
+}
+.results-box {
+  width: 80%;
+  align-items: start;
+  flex-direction: column;
+  margin: 12rem;
+  margin-left: 6rem;
+  display: flex;
+}
+
+.answer-grade{
+display: flex;
+align-items: center;
+justify-items: start;
+flex-direction: row;
+}
+
+.answer-box-bar{
+  display: flex;
+  flex-direction: row;
+}
+
+.label-personalize-item{
+  font-size: 2rem;
+  font-weight: 600;
+  margin-left: .3rem;
+}
+.all-answers-box{
+  display: flex;
+  flex-direction: column;
+  
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

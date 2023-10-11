@@ -13,24 +13,22 @@ const QuestionsView = () => {
     const randomQuestionList = randomNumbers();
     randomQuestionList.forEach((questionNumber) => {
       allQuestionsTempArray.push({
-        question: questions[questionNumber-1],
+        question: questions[questionNumber - 1],
         answer: 0,
       });
     });
     setAllquestionsInterview(allQuestionsTempArray);
   }, []);
   useEffect(() => {
-   
-   console.log(allQuestionsInterview);
+    console.log(allQuestionsInterview);
   }, [allQuestionsInterview]);
 
-
   const nextQuestion = (answer) => {
-    console.log(answer)
-   let tempQuestions= [ ...allQuestionsInterview];
-   tempQuestions[page].answer=answer;
-   setAllquestionsInterview(tempQuestions);   
-   setPage(page+1);
+    console.log(answer);
+    let tempQuestions = [...allQuestionsInterview];
+    tempQuestions[page].answer = parseInt(answer);
+    setAllquestionsInterview(tempQuestions);
+    setPage(page + 1);
   };
 
   const generateUniqueRandomNumbers = (
@@ -59,12 +57,12 @@ const QuestionsView = () => {
     <div>
       {page < 10 ? (
         <Question
-         key={"this_is_question_"+allQuestionsInterview[page].question}
+          key={"this_is_question_" + allQuestionsInterview[page].question}
           question={allQuestionsInterview[page].question}
           nextQuestion={nextQuestion}
         />
       ) : (
-        <Result/>
+        <Result questions={allQuestionsInterview} />
       )}
     </div>
   );
