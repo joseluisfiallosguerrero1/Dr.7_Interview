@@ -1,15 +1,12 @@
-import questions from "../Db/questions";
+
 import { useState } from "react";
 import { useEffect } from "react";
-const Question = ({ question, nextQuestion, answerPreloaded }) => {
-  console.log(answerPreloaded);
+const Question = ({ question, nextQuestion, answerPreloaded, index }) => {
   const [answerSelected, setAnswerSelected] = useState(0);
   const [loading, setLoading] = useState(false);
-  console.log(question);
 
   const handleChangeAnswerValue = (e) => {
     setLoading(true);
-    console.log(e.target.value);
     setAnswerSelected(e.target.value);
   };
 
@@ -20,14 +17,14 @@ const Question = ({ question, nextQuestion, answerPreloaded }) => {
     setAnswerSelected(question.answer);
   }, [question]);
   return (
-    <div>
-      <p>
-        {question.index}
+    <div className="card horizontal single-question">
+      <h4 className="card-content">
+        {index}
         {". "} {question.question}
-      </p>
-      <form action="#">
+      </h4>
+      <form className="answer-option-box card-action" action="#">
         {question.answers.map((answer) =>
-          answerPreloaded === undefined ? (
+          nextQuestion !== undefined ? (
             <div key={answer.option + "answer for " + question.question}>
               <label>
                 <input
@@ -46,12 +43,13 @@ const Question = ({ question, nextQuestion, answerPreloaded }) => {
             </div>
           ) : (
             <div
+              className="complete-answer"
               style={
                 answerPreloaded === question.correctAnswer &&
                 answerPreloaded === answer.option
-                  ? { background: "green" }
+                  ? { background: "#17d72137" }
                   : answerPreloaded === answer.option
-                  ? { background: "red" }
+                  ? { background: " #c122223f" }
                   : { background: "transparent" }
               }
               key={answer.option + "answer for " + question.question}
@@ -59,26 +57,36 @@ const Question = ({ question, nextQuestion, answerPreloaded }) => {
               <label>
                 <input
                   value={answer.option}
-                  checked={answer.option===answerPreloaded}
+                  checked={answer.option === answerPreloaded}
                   onChange={(e) => handleChangeAnswerValue(e)}
                   class="with-gap"
                   name="group1"
                   type="radio"
                 />
+
                 <span>
                   {answer.option}
                   {". "}
                   {answer.item}
                 </span>
               </label>
+              <span>
+                {question.correctAnswer === answer.option && "Correct Answer"}
+              </span>
             </div>
           )
         )}
       </form>
       {nextQuestion !== undefined && (
-        <button disabled={loading} onClick={() => nextQuestion(answerSelected)}>
-          Siguiente
-        </button>
+        <div className="buttons-box">
+          <button
+            className="waves-effect waves-light btn"
+            disabled={loading}
+            onClick={() => nextQuestion(answerSelected)}
+          >
+            Next
+          </button>{" "}
+        </div>
       )}
     </div>
   );

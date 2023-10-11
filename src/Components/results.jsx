@@ -4,7 +4,7 @@ const Result = ({ questions }) => {
   const calculateGrade = useMemo(() => {
     return (
       (questions.reduce((accumulator, currentQuestion) => {
-        if (currentQuestion.answer === currentQuestion.correctAnswer) {
+        if (currentQuestion.answer === currentQuestion.question.correctAnswer) {
           return accumulator + 1;
         } else {
           return accumulator;
@@ -16,28 +16,35 @@ const Result = ({ questions }) => {
   }, [questions]);
 
   return (
-    <div className="results-box">
-      <div className="answer-grade">
-        <div className="answer-box-bar">
+    <div className="fixed-box">
+      <h1>Results</h1>
+      <div className="results-box">
+        <div className="answer-grade">
+          <div className="answer-box-bar">
+            {questions.map((question) => (
+              <div
+                className="answer"
+                style={
+                  question.answer === question.question.correctAnswer
+                    ? { background: "#17d721d6" }
+                    : { background: "#c12222c1" }
+                }
+              ></div>
+            ))}
+          </div>
+          <span className="label-personalize-item"> = </span>
+          <span className="label-personalize-item">{calculateGrade}%</span>
+        </div>
+        <h5>Questions Feedback</h5>
+        
+        <div className="all-answers-box">
           {questions.map((question) => (
-            <div
-              className="answer"
-              style={
-                question.answer === question.question.correctAnswer
-                  ? { background: "#17d721d6" }
-                  : { background: "#c12222c1" }
-              }
-            ></div>
+            <Question
+              question={question.question}
+              answerPreloaded={question.answer}
+            />
           ))}
         </div>
-        <span className="label-personalize-item"> = </span>
-        <span className="label-personalize-item">{calculateGrade}%</span>
-        <div className="all-answers-box">
-        {questions.map((question) => (
-          <Question question={question.question}  answerPreloaded={question.answer} />
-        ))}
-        </div>
-        
       </div>
     </div>
   );

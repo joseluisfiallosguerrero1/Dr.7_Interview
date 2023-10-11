@@ -7,7 +7,7 @@ import Question from "./question";
 const QuestionsView = () => {
   const [allQuestionsInterview, setAllquestionsInterview] = useState([]);
   const [page, setPage] = useState(0);
-  const [answers, setAnswers] = useState([]);
+
   useEffect(() => {
     let allQuestionsTempArray = [];
     const randomQuestionList = randomNumbers();
@@ -19,12 +19,9 @@ const QuestionsView = () => {
     });
     setAllquestionsInterview(allQuestionsTempArray);
   }, []);
-  useEffect(() => {
-    console.log(allQuestionsInterview);
-  }, [allQuestionsInterview]);
+  useEffect(() => {}, [allQuestionsInterview]);
 
   const nextQuestion = (answer) => {
-    console.log(answer);
     let tempQuestions = [...allQuestionsInterview];
     tempQuestions[page].answer = parseInt(answer);
     setAllquestionsInterview(tempQuestions);
@@ -54,13 +51,23 @@ const QuestionsView = () => {
     return <></>;
   }
   return (
-    <div>
+    <div className="card full-application">
       {page < 10 ? (
-        <Question
-          key={"this_is_question_" + allQuestionsInterview[page].question}
-          question={allQuestionsInterview[page].question}
-          nextQuestion={nextQuestion}
-        />
+        <div className="main-questionary">
+          <h1 className="main-title">Capitals of the World</h1>
+          <h6 className="sub-title-main-view">
+            Select the answer that suits you for each of the queries, then press
+            next button to advance to the next query, at the end you will see a
+            panel with the results of your answers.
+          </h6>
+          <Question
+            key={"this_is_question_" + allQuestionsInterview[page].question}
+            question={allQuestionsInterview[page].question}
+            answerPreloaded={allQuestionsInterview[page].answer}
+            nextQuestion={nextQuestion}
+            index={page + 1}
+          />
+        </div>
       ) : (
         <Result questions={allQuestionsInterview} />
       )}
